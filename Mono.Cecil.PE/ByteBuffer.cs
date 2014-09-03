@@ -161,6 +161,11 @@ namespace Mono.Cecil.PE {
 		}
 
 #if !READ_ONLY
+		public void Align (int align)
+ 		{
+ 			align--;
+ 			WriteBytes (((position + align) & ~align) - position);
+ 		}
 
 		public void WriteByte (byte value)
 		{
