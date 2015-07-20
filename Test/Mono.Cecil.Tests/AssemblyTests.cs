@@ -18,7 +18,7 @@ namespace Mono.Cecil.Tests {
 				Assert.IsNotNull (name);
 
 				Assert.AreEqual ("hello", name.Name);
-				Assert.AreEqual (string.Empty, name.Culture);
+				Assert.AreEqual ("", name.Culture);
 				Assert.AreEqual (new Version (0, 0, 0, 0), name.Version);
 				Assert.AreEqual (AssemblyHashAlgorithm.SHA1, name.HashAlgorithm);
 			});
@@ -43,6 +43,16 @@ namespace Mono.Cecil.Tests {
 
 			name = new AssemblyNameReference ("Foo", new Version (0, 0, 0, 0));
 			Assert.AreEqual ("0.0.0.0", name.Version.ToString (fieldCount: 4));
+			Assert.AreEqual ("Foo, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null", name.FullName);
+		}
+
+		[Test]
+		public void NoBuildOrMajor ()
+		{
+			var name = new AssemblyNameReference ("Foo", new Version (0, 0));
+			Assert.AreEqual ("Foo, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null", name.FullName);
+
+			name = new AssemblyNameReference ("Foo", new Version (0, 0, 0));
 			Assert.AreEqual ("Foo, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null", name.FullName);
 		}
 	}
